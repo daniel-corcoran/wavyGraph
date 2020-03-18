@@ -8,7 +8,5 @@ data -= np.mean(data)
 def yield_data():
     for i in data:
         yield i
-print(len(data))
-absData = []
 for i in data:
     data = np.abs(i)
