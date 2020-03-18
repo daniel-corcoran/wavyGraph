@@ -55,19 +55,26 @@ class alien(object):
 
 
 
+        dir = 0
+        limit = 0
+        bpm = 120
 
         while True:
             print(palate.__next__())
+            beat_frac = random.choice([1, 2, 4, 8, 16])
+            sec_per_beat = 60 / bpm
+            sec_per_event = sec_per_beat * (1 / beat_frac)
+            prev_limit = limit
+            limit = random.randint(1, 100)
+            sec_per_frame = sec_per_event / abs(prev_limit - limit)
 
-            for x in range(random.randint(1, 100)):
+            for x in range(limit):
 
-                time.sleep(0.0125)
+                time.sleep(sec_per_frame)
                 self.canvas.itemconfig(self.bg, fill='#%02x%02x%02x' % palate.__next__())
-                self.change_circle_size(x)
-            for x in range(random.randint(1, 100)):
-                time.sleep(0.0125)
-                self.canvas.itemconfig(self.bg, fill='#%02x%02x%02x' % palate.__next__())
+                self.change_circle_size(dir - x)
+            limit = random.randint(1, 100)
+            dir = abs(100 - dir)
 
-                self.change_circle_size(100 - x)
-            self.canvas.itemconfig(self.hello, fill=random.choice(colors))
+            #self.canvas.itemconfig(self.hello, fill=random.choice(colors))
 alien()
